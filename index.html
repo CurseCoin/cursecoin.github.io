@@ -29,7 +29,7 @@ function curse() {
       return;
   }
 
-  this.contractInstance.curse(address, function(error) {
+  this.contractInstance.methods.curse(address).send({value: web3.utils.toWei( '1 ether' )}, function(error) {
     if (error) {
       alert(error)
       return;
@@ -40,7 +40,7 @@ function curse() {
 }
 
 function nullify() {
-  this.contractInstance.nullify(function(error) {
+  this.contractInstance.methods.nullify().send({value: web3.utils.toWei( '1 ether' )}, function(error) {
     if (error) {
       alert(error)
       return;
