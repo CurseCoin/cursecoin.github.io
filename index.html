@@ -51,7 +51,7 @@ function nullify() {
 }
 
 function amicursed() {
-  this.contractInstance.methods.amICursed().call({}, function(error, cursed) {
+  this.contractInstance.methods.amICursed().call({from: web3.eth.defaultAccount}, function(error, cursed) {
     if (error) {
       return;
     }
