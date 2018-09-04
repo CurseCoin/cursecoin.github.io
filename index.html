@@ -71,20 +71,20 @@ function loadContract() {
   this.web3.version.getNetwork((err, netId) => {
     switch (netId) {
       case "1":
-        self.abi = mainnet.json;
-        self.contractAddress = mainnet.address;
+        self.abi = contract.json;
+        self.contractAddress = mainnet;
         break
       case "3":
-        self.abi = ropsten.json;
-        self.contractAddress = ropsten.address;
+        self.abi = contract.json;
+        self.contractAddress = ropsten;
         break
       case "4":
-        self.abi = rinkeby.json;
-        self.contractAddress = rinkeby.address;
+        self.abi = contract.json;
+        self.contractAddress = rinkeby;
         break
       case "42":
-        self.abi = kovan.json;
-        self.contractAddress = kovan.address;
+        self.abi = contract.json;
+        self.contractAddress = kovan;
         break
       default:
         console.log('This is an unknown network.');
