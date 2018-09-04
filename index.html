@@ -9,7 +9,7 @@
     <script src="./assets/javascript/web3.min.js"></script>
     <link rel="stylesheet" href="./assets/css/style.css">
   </head>
-    <body class="centering">
+    <body class="centering"  style="text-align: center">
       <div id="curse-status">Loading...</div>
       <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
       <div id="curse-others"></div>
@@ -19,8 +19,6 @@
 </html>
 
 <script>
-var Web3 = require("web3");
-
 let contractInstance;
 
 function curse() {
@@ -29,7 +27,8 @@ function curse() {
       return;
   }
 
-  this.contractInstance.methods.curse(address).send({value: web3.utils.toWei( '1 ether' )}, function(error) {
+  // TODO: Change value to be taken from contract
+  this.contractInstance.methods.curse(address).send({from: web3.eth.defaultAccount, value: web3.utils.toWei("0.021", 'ether')}, function(error) {
     if (error) {
       alert(error)
       return;
@@ -40,7 +39,8 @@ function curse() {
 }
 
 function nullify() {
-  this.contractInstance.methods.nullify().send({value: web3.utils.toWei( '1 ether' )}, function(error) {
+  // TODO: Change value to be taken from contract
+  this.contractInstance.methods.nullify().send({from: web3.eth.defaultAccount, value: web3.utils.toWei("0.021", 'ether')}, function(error) {
     if (error) {
       alert(error)
       return;
@@ -51,7 +51,7 @@ function nullify() {
 }
 
 function amicursed(address) {
-  this.contractInstance.amICursed(function(error, cursed) {
+  this.contractInstance.methods.amICursed().call({}, function(error, cursed) {
     if (error) {
       return;
     }
@@ -66,7 +66,7 @@ function amicursed(address) {
        document.getElementById('curse-status').innerHTML = "You are not cursed";
      }
 
-     document.getElementById('curse-others').innerHTML = '<input id="curse-victim" type="text" placeholder="0x0"><button onclick="curse()">Curse the fool</button>'
+     document.getElementById('curse-others').innerHTML = '<input id="curse-victim" type="text" placeholder="0x0"><button onclick="curse()">Curse a fool</button>'
 
   });
 }
@@ -81,35 +81,41 @@ function loadContract() {
     document.getElementById('curse-status').innerHTML = "<a href=\"https://metamask.io/\">Install Metamask to check if you are cursed</a>"
     return;
   }
-  this.web3 = new Web3(provider);
+  web3 = new Web3(provider);
 
-  this.web3.version.getNetwork((err, netId) => {
-    let contract = self.web3.eth.contract(JSON.parse(contract_abi));
+  web3.eth.net.getNetworkType().then((netId) => {
 
     switch (netId) {
-      case "1":
-        self.contractInstance = contract.at(mainnet);
+      case "main":
+        self.contractInstance = new web3.eth.Contract(JSON.parse(contract_abi), mainnet);
         break
-      case "3":
-        self.contractInstance = contract.at(ropsten);
+      case "ropsten":
+        self.contractInstance = new web3.eth.Contract(JSON.parse(contract_abi), ropsten);
         break
-      case "4":
-        self.contractInstance = contract.at(rinkeby);
+      case "rinkeby":
+        self.contractInstance = new web3.eth.Contract(JSON.parse(contract_abi), rinkeby);
         break
-      case "42":
-        self.contractInstance = contract.at(kovan);
+      case "kovan":
+        self.contractInstance = new web3.eth.Contract(JSON.parse(contract_abi), kovan);
         break
       default:
         console.log('This is an unknown network.');
     }
 
-    self.web3.eth.defaultAccount = self.web3.eth.accounts[0];
-    amicursed()
+    web3.eth.getAccounts(function(error, accounts) {
+      if (error != null) {
+        console.log(error)
+        return
+      }
 
-    setInterval(function() {
+      web3.eth.defaultAccount = accounts[0]
+
       amicursed()
-    }, 5000);
 
+      setInterval(function() {
+        amicursed()
+      }, 5000);
+    });
   });
 }
 
