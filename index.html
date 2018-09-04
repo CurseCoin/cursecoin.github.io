@@ -44,7 +44,7 @@ function nullify() {
 }
 
 function amicursed(address) {
-  this.contractInstance.amICursed(address, function(error, cursed) {
+  this.contractInstance.amICursed(function(error, cursed) {
     if (error) {
       return;
     }
@@ -88,7 +88,7 @@ function loadContract() {
     self.web3.eth.defaultAccount = self.web3.eth.accounts[0];
 
     setInterval(function() {
-      amicursed(self.web3.eth.accounts[0])
+      amicursed()
     }, 5000);
 
   });
