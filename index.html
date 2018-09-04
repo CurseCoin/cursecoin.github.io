@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>am i çu̻̲̣̟̣̞̮̔̈́ͨ͂̈ͩr͎͖̾ͥ́̏͊͊͑s͇͒ͮ̄ͯ̃̎͊ẻ̯͈̠̖̤̩ͤ̑̐͒d̳̥̰̟̥͔̾̇̌͐͑</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="./assets/javascript/application.js"></script>
+    <script src="./assets/javascript/web3.min.js"></script>
+  </head>
+    <body id="curse-status" style="text-align: center">
+
+    </body>
+    <footer>
+    </footer>
+</html>
+
+<script>
+var Web3 = require("web3");
+
+let abi;
+let contractAddress;
+let MyContract;
+let myContractInstance;
+
+function curse() {
+  this.myContractInstance.Curse(address, function(error) {
+    if (error) {
+      alert(error)
+      return;
+    }
+
+    alert('Success!');
+  });
+}
+
+function nullify() {
+  this.myContractInstance.Nullify(function(error) {
+    if (error) {
+      alert(error)
+      return;
+    }
+
+    alert('Success!');
+  });
+}
+
+function amicursed(address) {
+  this.myContractInstance.AmICursed(address, function(error, cursed) {
+    if (error) {
+      return;
+    }
+
+    document.getElementById('curse-status').innerHTML = (cursed) ? "You are cursed" : "You are not cursed";
+  });
+}
+
+function loadContract() {
+  var self = this;
+  // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+  if (typeof this.web3 !== 'undefined') {
+    // Use the browser's ethereum provider
+    var provider = web3.currentProvider;
+  } else {
+    document.getElementById('curse-status').innerHTML = "<a href=\"https://metamask.io/\">Install Metamask to check if you are cursed</a>"
+    return;
+  }
+  this.web3 = new Web3(provider);
+
+  this.web3.version.getNetwork((err, netId) => {
+    switch (netId) {
+      case "1":
+        self.abi = mainnet.json;
+        self.contractAddress = mainnet.address;
+        break
+      case "3":
+        self.abi = ropsten.json;
+        self.contractAddress = ropsten.address;
+        break
+      case "4":
+        self.abi = rinkeby.json;
+        self.contractAddress = rinkeby.address;
+        break
+      case "42":
+        self.abi = kovan.json;
+        self.contractAddress = kovan.address;
+        break
+      default:
+        console.log('This is an unknown network.');
+    }
+
+    self.MyContract = self.web3.eth.contract(JSON.parse(self.abi));
+    self.myContractInstance = self.MyContract.at(self.contractAddress);
+
+    self.web3.eth.defaultAccount = self.web3.eth.accounts[0];
+    setInterval(function(){
+      amicursed(self.web3.eth.accounts[0])
+    }, 5000);
+  });
+}
+
+window.addEventListener('load', loadContract());
+</script>
