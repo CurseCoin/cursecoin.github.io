@@ -19,13 +19,10 @@
 <script>
 var Web3 = require("web3");
 
-let abi;
-let contractAddress;
-let MyContract;
-let myContractInstance;
+let contractInstance;
 
 function curse() {
-  this.myContractInstance.Curse(address, function(error) {
+  this.contractInstance.Curse(address, function(error) {
     if (error) {
       alert(error)
       return;
@@ -36,7 +33,7 @@ function curse() {
 }
 
 function nullify() {
-  this.myContractInstance.Nullify(function(error) {
+  this.contractInstance.Nullify(function(error) {
     if (error) {
       alert(error)
       return;
@@ -47,7 +44,7 @@ function nullify() {
 }
 
 function amicursed(address) {
-  this.myContractInstance.AmICursed(address, function(error, cursed) {
+  this.contractInstance.AmICursed(address, function(error, cursed) {
     if (error) {
       return;
     }
@@ -69,34 +66,31 @@ function loadContract() {
   this.web3 = new Web3(provider);
 
   this.web3.version.getNetwork((err, netId) => {
+    let contract = self.web3.eth.contract(JSON.parse(contract_abi));
+
     switch (netId) {
       case "1":
-        self.abi = contract.json;
-        self.contractAddress = mainnet;
+        self.contractInstance = contract.at(mainnet);
         break
       case "3":
-        self.abi = contract.json;
-        self.contractAddress = ropsten;
+        self.contractInstance = contract.at(ropsten);
         break
       case "4":
-        self.abi = contract.json;
-        self.contractAddress = rinkeby;
+        self.contractInstance = contract.at(rinkeby);
         break
       case "42":
-        self.abi = contract.json;
-        self.contractAddress = kovan;
+        self.contractInstance = contract.at(kovan);
         break
       default:
         console.log('This is an unknown network.');
     }
 
-    self.MyContract = self.web3.eth.contract(JSON.parse(self.abi));
-    self.myContractInstance = self.MyContract.at(self.contractAddress);
-
     self.web3.eth.defaultAccount = self.web3.eth.accounts[0];
-    setInterval(function(){
+
+    setInterval(function() {
       amicursed(self.web3.eth.accounts[0])
     }, 5000);
+
   });
 }
 
