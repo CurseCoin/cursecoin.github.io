@@ -12,8 +12,7 @@
     <body class="centering">
       <div id="curse-status">Loading...</div>
       <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <div id="curse-others">
-      </div>
+      <div id="curse-others"></div>
     </body>
     <footer>
     </footer>
@@ -67,10 +66,7 @@ function amicursed(address) {
        document.getElementById('curse-status').innerHTML = "You are not cursed";
      }
 
-     document.getElementById('curse-others').innerHTML = ```
-     <input id="curse-victim" type="text" placeholder="0x0">
-     <button id="cursebutton" type="button" onclick="curse()">Curse</button>
-     ```
+     document.getElementById('curse-others').innerHTML = '<input id="curse-victim" type="text" placeholder="0x0"><button onclick="curse()">Curse the fool</button>'
 
   });
 }
