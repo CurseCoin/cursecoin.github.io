@@ -9,8 +9,11 @@
     <script src="./assets/javascript/web3.min.js"></script>
     <link rel="stylesheet" href="./assets/css/style.css">
   </head>
-    <body>
-      <div id="curse-status" style="text-align: center">Loading...</div>
+    <body class="centering">
+      <div id="curse-status">Loading...</div>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <div id="curse-others">
+      </div>
     </body>
     <footer>
     </footer>
@@ -22,13 +25,18 @@ var Web3 = require("web3");
 let contractInstance;
 
 function curse() {
+  let address = document.getElementById("curse-victim").value;
+  if (!address) {
+      return;
+  }
+
   this.contractInstance.curse(address, function(error) {
     if (error) {
       alert(error)
       return;
     }
 
-    alert('Success!');
+    alert('You have successfully cursed a helpless fool!');
   });
 }
 
@@ -39,7 +47,7 @@ function nullify() {
       return;
     }
 
-    alert('Success!');
+    alert('You have successfully nullified the curse!');
   });
 }
 
@@ -49,7 +57,21 @@ function amicursed(address) {
       return;
     }
 
-    document.getElementById('curse-status').innerHTML = (cursed) ? "Y̖͍̲̜̫͈̒̐͌ͩ͆̂́̚o̸̖̙͈̫u̩̙͆ͣ̀ ͕̰͑ͨá̵̩̯̭͍̥̥̅̇ͣͥ̏r͍̥̬͈̗̲̫ͥ̕e̼̹̭ͭ̐ͭ͌ͭ̌̆͞ ҉͚͈̟c̡͔̉̀ͬͪ͒u̘̼̒̏́̾̓̓͐ṟ̤̞͇ͣs͇̝̖̪̯ͪ̑ͧ͒͐ͣ̔ê̋͏̞̖d̝͔͖͕ͧ" : "You are not cursed";
+     if (cursed) {
+       document.getElementById('curse-status').innerHTML = ```
+       Y̖͍̲̜̫͈̒̐͌ͩ͆̂́̚o̸̖̙͈̫u̩̙͆ͣ̀ ͕̰͑ͨá̵̩̯̭͍̥̥̅̇ͣͥ̏r͍̥̬͈̗̲̫ͥ̕e̼̹̭ͭ̐ͭ͌ͭ̌̆͞ ҉͚͈̟c̡͔̉̀ͬͪ͒u̘̼̒̏́̾̓̓͐ṟ̤̞͇ͣs͇̝̖̪̯ͪ̑ͧ͒͐ͣ̔ê̋͏̞̖d̝͔͖͕ͧ
+       <br /><br />
+       <button onclick="nullify()">Lift the Curse!</button>
+       ```
+     } else {
+       document.getElementById('curse-status').innerHTML = "You are not cursed";
+     }
+
+     document.getElementById('curse-others').innerHTML = ```
+     <input id="curse-victim" type="text" placeholder="0x0">
+     <button id="cursebutton" type="button" onclick="curse()">Curse</button>
+     ```
+
   });
 }
 
