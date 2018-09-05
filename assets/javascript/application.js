@@ -2,5 +2,5 @@ const contract_abi = "[ { \"constant\": true, \"inputs\": [], \"name\": \"name\"
 
 const rinkeby = "0xf6e76c00ff05b95fd0721712e87b654eb4665724"
 const mainnet = "0x0"
-const ropsten = "0x0"
-const kovan = "0x0"
+const ropsten = "0x1856323c840943a882f2ce7ec1069d6d5458800f"
+const kovan = "0x1856323c840943a882f2ce7ec1069d6d5458800f"
