@@ -12,7 +12,9 @@
     <body class="centering"  style="text-align: center">
       <div id="curse-status" style="font-size:36px">Loading...</div>
       <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-      <div id="curse-others"></div>
+      <div id="curse-others" style="display:none;">
+        <input id="curse-victim" type="text" placeholder="0x0"><button id="curse-button" onclick="curse()">Curse a fool</button>
+      </div>
     </body>
     <br /><br /><br /><br /><br /><br />
     <footer style="bottom:0;height:60px;">
@@ -65,8 +67,6 @@ function amicursed() {
        document.getElementById('curse-status').innerHTML = "You are not cursed";
      }
 
-     document.getElementById('curse-others').innerHTML = '<input id="curse-victim" type="text" placeholder="0x0"><button onclick="curse()">Curse a fool</button>'
-
   });
 }
 
@@ -118,6 +118,7 @@ function loadContract() {
       }
 
       web3.eth.defaultAccount = accounts[0]
+      document.getElementById('curse-others').style = 'display:auto;';
 
       amicursed()
 
