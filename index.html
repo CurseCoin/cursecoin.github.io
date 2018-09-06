@@ -7,6 +7,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="./assets/javascript/application.js"></script>
     <script src="./assets/javascript/web3.min.js"></script>
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png">
     <link rel="stylesheet" href="./assets/css/style.css">
   </head>
     <body class="centering"  style="text-align: center">
@@ -23,111 +24,111 @@
 </html>
 
 <script>
-let contractInstance;
+  let contractInstance;
 
-function curse() {
-  let address = document.getElementById("curse-victim").value;
-  if (!address) {
-      return;
-  }
-
-  // TODO: Change value to be taken from contract
-  this.contractInstance.methods.curse(address).send({from: web3.eth.defaultAccount, value: web3.utils.toWei("0.021", 'ether')}, function(error) {
-    if (error) {
-      console.log(error)
+  function curse() {
+    let address = document.getElementById("curse-victim").value;
+    if (!address) {
       return;
     }
 
-    alert('You have successfully cursed a helpless fool!');
-  });
-}
-
-function nullify() {
-  // TODO: Change value to be taken from contract
-  this.contractInstance.methods.nullify().send({from: web3.eth.defaultAccount, value: web3.utils.toWei("0.021", 'ether')}, function(error) {
-    if (error) {
-      console.log(error)
-      return;
-    }
-
-    alert('You have successfully nullified the curse!');
-  });
-}
-
-function amicursed() {
-  this.contractInstance.methods.amICursed().call({from: web3.eth.defaultAccount}, function(error, cursed) {
-    if (error) {
-      console.log(error);
-      return;
-    }
-
-     if (cursed) {
-       document.getElementById('curse-status').innerHTML = 'Y̖͍̲̜̫͈̒̐͌ͩ͆̂́̚o̸̖̙͈̫u̩̙͆ͣ̀ ͕̰͑ͨá̵̩̯̭͍̥̥̅̇ͣͥ̏r͍̥̬͈̗̲̫ͥ̕e̼̹̭ͭ̐ͭ͌ͭ̌̆͞ ҉͚͈̟c̡͔̉̀ͬͪ͒u̘̼̒̏́̾̓̓͐ṟ̤̞͇ͣs͇̝̖̪̯ͪ̑ͧ͒͐ͣ̔ê̋͏̞̖d̝͔͖͕ͧ<br /><br /><br /><button onclick="nullify()">Lift the Curse!</button>'
-     } else {
-       document.getElementById('curse-status').innerHTML = "You are not cursed";
-     }
-
-  });
-}
-
-function withdraw() {
-  this.contractInstance.methods.withdraw().send({from: web3.eth.defaultAccount}, function(error) {
-    if (error != null) {
-      return alert(error)
-    }
-
-    return alert("Success took everyone's hard earned money!")
-  });
-}
-
-function loadContract() {
-  var self = this;
-  // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-  if (typeof this.web3 !== 'undefined') {
-    // Use the browser's ethereum provider
-    var provider = web3.currentProvider;
-  } else {
-    document.getElementById('curse-status').innerHTML = "<a href=\"https://metamask.io/\">Install Metamask to check if you are cursed</a>"
-    return;
-  }
-  web3 = new Web3(provider);
-
-  web3.eth.net.getNetworkType().then((netId) => {
-
-    switch (netId) {
-      case "main":
-        self.contractInstance = new web3.eth.Contract(JSON.parse(contract_abi), mainnet);
-        break
-      case "ropsten":
-        self.contractInstance = new web3.eth.Contract(JSON.parse(contract_abi), ropsten);
-        break
-      case "rinkeby":
-        self.contractInstance = new web3.eth.Contract(JSON.parse(contract_abi), rinkeby);
-        break
-      case "kovan":
-        self.contractInstance = new web3.eth.Contract(JSON.parse(contract_abi), kovan);
-        break
-      default:
-        console.log('This is an unknown network.');
-    }
-
-    web3.eth.getAccounts(function(error, accounts) {
-      if (error != null) {
+    // TODO: Change value to be taken from contract
+    this.contractInstance.methods.curse(address).send({ from: web3.eth.defaultAccount, value: web3.utils.toWei("0.021", 'ether') }, function (error) {
+      if (error) {
         console.log(error)
-        return
+        return;
       }
 
-      web3.eth.defaultAccount = accounts[0]
-      document.getElementById('curse-others').style = 'display:auto;';
-
-      amicursed()
-
-      setInterval(function() {
-        amicursed()
-      }, 3000);
+      alert('You have successfully cursed a helpless fool!');
     });
-  });
-}
+  }
 
-window.addEventListener('load', loadContract());
+  function nullify() {
+    // TODO: Change value to be taken from contract
+    this.contractInstance.methods.nullify().send({ from: web3.eth.defaultAccount, value: web3.utils.toWei("0.021", 'ether') }, function (error) {
+      if (error) {
+        console.log(error)
+        return;
+      }
+
+      alert('You have successfully nullified the curse!');
+    });
+  }
+
+  function amicursed() {
+    this.contractInstance.methods.amICursed().call({ from: web3.eth.defaultAccount }, function (error, cursed) {
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      if (cursed) {
+        document.getElementById('curse-status').innerHTML = 'Y̖͍̲̜̫͈̒̐͌ͩ͆̂́̚o̸̖̙͈̫u̩̙͆ͣ̀ ͕̰͑ͨá̵̩̯̭͍̥̥̅̇ͣͥ̏r͍̥̬͈̗̲̫ͥ̕e̼̹̭ͭ̐ͭ͌ͭ̌̆͞ ҉͚͈̟c̡͔̉̀ͬͪ͒u̘̼̒̏́̾̓̓͐ṟ̤̞͇ͣs͇̝̖̪̯ͪ̑ͧ͒͐ͣ̔ê̋͏̞̖d̝͔͖͕ͧ<br /><br /><br /><button onclick="nullify()">Lift the Curse!</button>'
+      } else {
+        document.getElementById('curse-status').innerHTML = "You are not cursed";
+      }
+
+    });
+  }
+
+  function withdraw() {
+    this.contractInstance.methods.withdraw().send({ from: web3.eth.defaultAccount }, function (error) {
+      if (error != null) {
+        return alert(error)
+      }
+
+      return alert("Success took everyone's hard earned money!")
+    });
+  }
+
+  function loadContract() {
+    var self = this;
+    // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+    if (typeof this.web3 !== 'undefined') {
+      // Use the browser's ethereum provider
+      var provider = web3.currentProvider;
+    } else {
+      document.getElementById('curse-status').innerHTML = "<a href=\"https://metamask.io/\">Install Metamask to check if you are cursed</a>"
+      return;
+    }
+    web3 = new Web3(provider);
+
+    web3.eth.net.getNetworkType().then((netId) => {
+
+      switch (netId) {
+        case "main":
+          self.contractInstance = new web3.eth.Contract(JSON.parse(contract_abi), mainnet);
+          break
+        case "ropsten":
+          self.contractInstance = new web3.eth.Contract(JSON.parse(contract_abi), ropsten);
+          break
+        case "rinkeby":
+          self.contractInstance = new web3.eth.Contract(JSON.parse(contract_abi), rinkeby);
+          break
+        case "kovan":
+          self.contractInstance = new web3.eth.Contract(JSON.parse(contract_abi), kovan);
+          break
+        default:
+          console.log('This is an unknown network.');
+      }
+
+      web3.eth.getAccounts(function (error, accounts) {
+        if (error != null) {
+          console.log(error)
+          return
+        }
+        
+        document.getElementById('curse-others').style = 'display:auto;';
+        web3.eth.defaultAccount = accounts[0]
+
+        amicursed()
+
+        setInterval(function () {
+          amicursed()
+        }, 3000);
+      });
+    });
+  }
+
+  window.addEventListener('load', loadContract());
 </script>
