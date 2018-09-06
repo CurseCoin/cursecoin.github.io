@@ -40,6 +40,8 @@
       }
 
       alert('You have successfully cursed a helpless fool!');
+
+      document.getElementById('curse-victim').value = ''
     });
   }
 
@@ -117,7 +119,7 @@
           console.log(error)
           return
         }
-        
+
         document.getElementById('curse-others').style = 'display:auto;';
         web3.eth.defaultAccount = accounts[0]
 
